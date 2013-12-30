@@ -150,6 +150,8 @@ class PKG:
             root.appendChild(atlas)
 
         # Write the XML data.
+        if not os.path.exists(os.path.dirname(file_path)):
+            os.makedirs(os.path.dirname(file_path))
         xml_data = doc.toprettyxml(encoding='utf-8')
         try:
             with open(file_path, 'wb') as f:
