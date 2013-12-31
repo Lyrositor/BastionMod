@@ -1,13 +1,15 @@
 BastionMod
 ==========
 
-Tool for modding [Supergiant Games'](http://supergiantgames.com/) video game *Bastion*. BastionMod lets you extract game data, edit it, and insert it back in.
+Tool for modding [Supergiant Games'](http://supergiantgames.com/) video game *Bastion*. BastionMod lets you extract game data from Bastion, edit it, and insert it back in.
 
 Features:
   - Audio extraction (includes video game music and narration)
   - Graphics extraction (tilesets, character animations...)
 
 License: [WTFPL](http://www.wtfpl.net/)
+
+**WARNING:** BastionMod only works with the Linux version of Bastion's `Content` folder (and possibly the Mac version). It will **not** work with the Windows version's `Content` folder. This is due to several major differences in file formats between each version, which would require substantial rewrites of BastionMod's code to be supported. Future versions may integrate this functionality.
 
 ## Usage ##
 **Note:** Before running BastionMod.py, make sure you've read the section entitled "C++ Modules".
