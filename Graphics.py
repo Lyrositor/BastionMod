@@ -310,11 +310,8 @@ class Texture:
 
         if format == Texture.FORMAT_COLOR:
             image = []
-            l = len(data)
-            i = 0
-            while i < l:
+            for i in range(0, len(data), 4):
                 image += (data[i+2], data[i+1], data[i], data[i+3])
-                i += 4
             image = bytearray(image)
         elif format == Texture.FORMAT_DXT1:
             image = bm_dxt.to_rgba(1, width, height, data)
