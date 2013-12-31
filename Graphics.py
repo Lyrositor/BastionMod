@@ -332,24 +332,16 @@ class Graphics(BastionModule):
         """Extracts the graphics data."""
 
         # Get a list of PKG files.
-        pkgs = []
-        pkgs_big = sorted(glob(os.path.join(graphics_dir, '*.pkg')))
-        pkgs_720p = sorted(glob(os.path.join(graphics_dir, '720p', '*.pkg')))
-        pkgs.extend(pkgs_big)
-        pkgs.extend(pkgs_720p)
+        pkgs = sorted(glob(os.path.join(graphics_dir, '*.pkg')))
         if not pkgs:
             raise GraphicsError('Failed to find any PKGs.')
 
         # Load and process the PKG files.
         # Use processes to reduce memory usage.
         for pkg_path in pkgs:
-            if pkg_path in pkgs_big:
-                e_dir = extract_dir
-            else:
-                e_dir = os.path.join(extract_dir, '720p')
             p = Process(
                 target=run_process,
-                args=(pkg_path, self.debug, e_dir)
+                args=(pkg_path, self.debug, extract_dir)
             )
             p.start()
             p.join()
