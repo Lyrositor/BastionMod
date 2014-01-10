@@ -5,7 +5,7 @@
  *
  * Copyright © 2003-2004 Stuart Caie
  * Copyright © 2011 Ali Scissons
- * Copyright © 2013 Marc Gagné <gagne.marc@gmail.com>
+ * Copyright © 2014 Marc Gagné <gagne.marc@gmail.com>
  * The LZX method was created by Jonathan Forbes and Tomi Poutanen, adapted
  * by Microsoft Corporation.
  * GNU LESSER GENERAL PUBLIC LICENSE version 2.1

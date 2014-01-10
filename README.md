@@ -14,7 +14,7 @@ License: [WTFPL](http://www.wtfpl.net/)
 ## Usage ##
 **Note:** Before running BastionMod.py, make sure you've read the section entitled "C++ Modules".
 
-Make sure you have installed [Python 3](http://python.org/) and [Pillow](http://python-imaging.github.io/) (or the Python Imaging Library for Python 3).
+Make sure you have installed [Python 3.3](http://python.org/) or higher and [Pillow](http://python-imaging.github.io/) (or the Python Imaging Library for Python 3).
 
 Run `BastionMod.py` from the terminal to start the program, with either the `-e` (extract) or `-c` (compile) argument, followed by the path to Bastion's folder and the path to the content to be extracted/extracted content.
 
