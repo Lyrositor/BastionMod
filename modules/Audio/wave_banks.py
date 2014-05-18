@@ -8,86 +8,13 @@
 import os
 import tempfile
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 from document import Document
-from .bastion_module import BastionModule
 from BastionLib.binary_stream import BinaryStream
-from BastionLib.audio.sound_bank import SoundBank
 from BastionLib.audio.wave_bank import WaveBank
-from logger import Logger
-
-
-class Audio(BastionModule):
-    """
-        Manages, plays and saves audio files.
-    """
-
-    def __init__(self, bastion_folder, window):
-        """
-            Loads the available audio data and displays it.
-        """
-
-        super().__init__(bastion_folder, window)
-        self.sound_bank = None
-
-        a = self.add_browser_entry('Audio')
-        self.add_browser_entry('Wave Banks', None, a, self.open_wave_banks)
-        self.add_browser_entry('Sounds', None, a, self.open_sounds)
-        self.add_browser_entry('Cues', None, a, self.open_cues)
-
-    def get_document(self, cls):
-        """
-            Returns an existing instance of the document, if possible.
-
-            This method searches for an existing document with the same class;
-            if it finds one, it switches to it and returns it, otherwise it
-            returns None.
-        """
-
-        for i in range(self.window.editor.count()):
-            document = self.window.editor.widget(i)
-            if isinstance(document, cls):
-                self.window.editor.setCurrentIndex(i)
-                return document
-        return None
-
-    def open_wave_banks(self, entry_value):
-        """
-            Opens the Wave Banks document.
-        """
-
-        document = self.get_document(WaveBanksDocument)
-        if not document:
-            document = WaveBanksDocument(self)
-            self.add_document('Wave Banks', document)
-        else:
-            self.window.editor.setCurrentWidget(document)
-
-    def open_sounds(self, entry_value):
-        """
-            Opens the Sounds document.
-        """
-
-        document = self.get_document(SoundsDocument)
-        if not document:
-            document = SoundsDocument(self)
-            self.add_document('Sounds', document)
-        else:
-            self.window.editor.setCurrentWidget(document)
-
-    def open_cues(self, entry_value):
-        """
-            Opens the Cues document.
-        """
-
-        document = self.get_document(CuesDocument)
-        if not document:
-            document = CuesDocument(self)
-            self.add_document('Cues', document)
-        else:
-            self.window.editor.setCurrentWidget(document)
 
 
 class WaveBanksDocument(Document):
@@ -116,10 +43,13 @@ class WaveBanksDocument(Document):
         # Create the actions.
         add_wave_bank = QAction('Add Wave Bank', self.wave_banks_list)
         add_wave_bank.triggered.connect(self.add_wave_bank)
-        self.wave_banks_list.insertAction(None, add_wave_bank)
+        self.wave_banks_list.addAction(add_wave_bank)
         add_file = QAction('Add File', self.files_list)
         add_file.triggered.connect(self.add_file)
-        self.files_list.insertAction(None, add_file)
+        rm_file = QAction('Remove File', self.files_list)
+        rm_file.triggered.connect(self.remove_file)
+        rm_file.setEnabled(False)
+        self.files_list.addActions([add_file, rm_file])
 
         self.reset()
 
@@ -165,7 +95,7 @@ class WaveBanksDocument(Document):
 
         # Load the wave bank file.
         if not reload_files:
-            if name != WaveBank.STREAMING:    
+            if name != WaveBank.STREAMING:
                 self.wave_bank = WaveBank.from_file(
                     self.module.bastion_folder.wave_banks[name])
             else:
@@ -209,6 +139,8 @@ class WaveBanksDocument(Document):
             self.save_button.setEnabled(False)
             self.play_button.setEnabled(False)
             self.stop_button.setEnabled(False)
+        if buttons:
+            self.files_list.actions()[1].setEnabled(enabled)
 
     def get_file(self):
         """
@@ -246,9 +178,9 @@ class WaveBanksDocument(Document):
             i = self.get_file()
             if i is None:
                 return
-        input_path = QFileDialog.getOpenFileName(self, 'Open Wave Bank File',
-            '', 'Ogg File (*.ogg)')
-        if not input_path:
+        input_path, status = QFileDialog.getOpenFileName(self,
+            'Open Wave Bank File', '', 'Ogg File (*.ogg)')
+        if not input_path or not status:
             return
         s = BinaryStream.from_file(input_path)
         if i < len(self.wave_bank.files):
@@ -320,59 +252,19 @@ class WaveBanksDocument(Document):
         item = self.files_list.item(i)
         self.files_list.scrollToItem(item)
         self.files_list.setCurrentItem(item)
+        self.modify()
 
-
-class SoundsDocument(Document):
-    """
-        Presents all available sounds for modification.
-    """
-
-    UI_FILE = 'ui/audio_sounds_document.ui'
-
-    def __init__(self, module):
+    def remove_file(self):
         """
-            Creates a new document.
+            Removes a file from the wave bank.
         """
 
-        super().__init__(self.UI_FILE)
-        self.module = module
+        if not self.wave_bank:
+            return
 
-        self.reset()
-
-    def reset(self):
-        """
-            Loads the data from the sound bank file.
-        """
-
-        if not self.module.sound_bank:
-            self.module.sound_bank = SoundBank.from_file(
-                self.module.bastion_folder.sound_bank)
-        sb = self.module.sound_bank
-
-
-class CuesDocument(Document):
-    """
-        Presents all available cues for modification.
-    """
-
-    UI_FILE = 'ui/audio_cues_document.ui'
-
-    def __init__(self, module):
-        """
-            Creates a new document.
-        """
-
-        super().__init__(self.UI_FILE)
-        self.module = module
-
-        self.reset()
-
-    def reset(self):
-        """
-            Loads the data from the sound bank file.
-        """
-
-        if not self.module.sound_bank:
-            self.module.sound_bank = SoundBank.from_file(
-                self.module.bastion_folder.sound_bank)
-        sb = self.module.sound_bank
+        i = self.get_file()
+        if i is None:
+            return
+        del self.wave_bank.files[i]
+        self.load_wave_bank(True)
+        self.modify()

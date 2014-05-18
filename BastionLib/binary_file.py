@@ -190,24 +190,26 @@ class BinaryProperty:
         self.repeat = repeat
         if default is not None:
             self.default = default
-        elif default is None and isinstance(self.data_type, type):
-            self.default = self.data_type()
         else:
-            self.default = self.get_default(data_type)
+            self.default = self.get_default(data_type, self.repeat)
         self.equals = equals
         self.param = param
         self.require = require
         self.read_one = self.get_read_method()
         self.write_one = self.get_write_method()
 
-    def get_default(self, data_type):
+    def get_default(self, data_type, repeat=None):
         """
             Returns the standard default value for a primitive data-type.
         """
 
-        if self.repeat is not None:
+        if repeat is not None:
+            if isinstance(repeat, int):
+                return [self.get_default(data_type)] * repeat
             return []
-        if data_type in Types.INTEGERS:
+        if isinstance(data_type, type):
+            return data_type()
+        elif data_type in Types.INTEGERS:
             return 0
         elif data_type in Types.FLOATING_POINTS:
             return 0.0

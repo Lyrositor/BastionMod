@@ -28,15 +28,13 @@ class BastionModule:
         on_select=None):
         """Adds a new entry in the main window's file browser."""
 
-        m = self.window.file_browser.model()
-        if not m:
-            return
-        entry = FileBrowserEntry(name, on_select)
-        entry.setData(value)
         if not parent:
-            m.appendRow(entry)
-        else:
-            parent.appendRow(entry)
+            parent = self.window.file_browser.invisibleRootItem()
+        entry = QTreeWidgetItem(QTreeWidgetItem.UserType)
+        entry.setText(0, name)
+        entry.setData(0, Qt.UserRole, value)
+        entry.setData(0, Qt.UserRole + 1, on_select)
+        parent.addChild(entry)
         return entry
 
     def add_document(self, name, document):

@@ -14,6 +14,6 @@ OUTPUT = 'tests/temp/BastionSoundBank.xsb'
 
 import time
 t = time.time()
-s = SoundBank.from_file(INPUT)
-s.save(OUTPUT)
+sb = SoundBank.from_file(INPUT)
+sb.save(OUTPUT)
 os.execlp('vbindiff', '', INPUT, OUTPUT)

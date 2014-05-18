@@ -23,95 +23,6 @@
    <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QTableWidget" name="sounds_table">
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="rowCount">
-      <number>0</number>
-     </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Category</string>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeft|AlignVCenter</set>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Reverb</string>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeft|AlignVCenter</set>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Unknown 1</string>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeft|AlignVCenter</set>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Unknown 2</string>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeft|AlignVCenter</set>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Unknown 3</string>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeft|AlignVCenter</set>
-      </property>
-     </column>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="sounds_label">
      <property name="font">
@@ -127,105 +38,6 @@
    </item>
    <item row="1" column="1">
     <layout class="QGridLayout" name="sound_settings">
-     <item row="1" column="1">
-      <widget class="QTableWidget" name="wave_bank_files_table">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
-       </property>
-       <property name="sortingEnabled">
-        <bool>false</bool>
-       </property>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Wave Bank</string>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeft|AlignVCenter</set>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>ID</string>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeft|AlignVCenter</set>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Unknown</string>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeft|AlignVCenter</set>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QTableWidget" name="tracks_table">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
-       </property>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>#</string>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeft|AlignVCenter</set>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Unknown</string>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeft|AlignVCenter</set>
-        </property>
-       </column>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="tracks_label">
        <property name="enabled">
@@ -242,6 +54,78 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="1">
+      <widget class="QGroupBox" name="unknown_box">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="title">
+        <string>Unknown Variables</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="unknown1_label">
+          <property name="text">
+           <string>Unknown 1:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="unknown1_edit">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
+          <property name="maxLength">
+           <number>11</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="unknown2_label">
+          <property name="text">
+           <string>Unknown 2:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="unknown2_edit">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
+          <property name="maxLength">
+           <number>11</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="unknown3_label">
+          <property name="text">
+           <string>Unknown 3:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="unknown3_edit">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
+          <property name="maxLength">
+           <number>11</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QGroupBox" name="properties_box">
        <property name="enabled">
@@ -250,15 +134,99 @@
        <property name="title">
         <string>Properties</string>
        </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QFormLayout" name="category_box">
+          <item row="0" column="0">
+           <widget class="QLabel" name="category_label">
+            <property name="text">
+             <string>Category:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="category_list">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>Default</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Music</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>ImpactsAndDeath</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UI</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Narration</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UniqueNarration</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PORTAL VO</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="reverb_label">
+            <property name="text">
+             <string>Reverb:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QVBoxLayout" name="reverb_list">
+            <item>
+             <widget class="QRadioButton" name="reverb_none">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="reverb_microsoft">
+              <property name="text">
+               <string>Microsoft Reverb</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QCheckBox" name="property_6">
           <property name="text">
            <string>Vocalization Attenuation</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -266,9 +234,6 @@
           <property name="text">
            <string>Narration Attenuation</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -276,9 +241,6 @@
           <property name="text">
            <string>Distance Attenuation</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -286,9 +248,6 @@
           <property name="text">
            <string>Music Attenuation</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -296,9 +255,6 @@
           <property name="text">
            <string>Reverb Distance Attenuation</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -306,9 +262,6 @@
           <property name="text">
            <string>Menu Low Pass Frequency</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
         <item>
@@ -316,41 +269,74 @@
           <property name="text">
            <string>Game Low Pass Frequency</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">properties</string>
-          </attribute>
          </widget>
         </item>
        </layout>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="wave_bank_files_label">
+     <item row="1" column="1">
+      <layout class="QVBoxLayout" name="tracks_box">
+       <item>
+        <widget class="QLabel" name="wave_bank_files_label">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Wave Bank Files</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="wave_bank_files_list">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::ActionsContextMenu</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QListWidget" name="tracks_list">
        <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
+       <property name="contextMenuPolicy">
+        <enum>Qt::ActionsContextMenu</enum>
        </property>
-       <property name="text">
-        <string>Wave Bank Files</string>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
     </layout>
    </item>
+   <item row="1" column="0">
+    <widget class="QListWidget" name="sounds_list">
+     <property name="cursor" stdset="0">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="properties">
-   <property name="exclusive">
-    <bool>false</bool>
-   </property>
-  </buttongroup>
- </buttongroups>
 </ui>

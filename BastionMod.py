@@ -10,12 +10,11 @@
 import os
 import sys
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4 import uic
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5 import uic
 
 from BastionLib.bastion_folder import BastionFolder
-from file_browser import FileBrowser
 from logger import Logger
 import modules
 from resources import *
@@ -69,12 +68,19 @@ class BastionModApp(QApplication):
             Sets up the file browser to its default state.
         """
 
-        model = FileBrowser(self)
         self.main.file_browser.setEnabled(bool(bastion_folder))
-        self.main.file_browser.setModel(model)
+        self.main.file_browser.itemSelectionChanged.connect(self.on_select)
 
-        s = self.main.file_browser.selectionModel()
-        s.selectionChanged.connect(model.on_select)
+    def on_select(self):
+        """
+            Called when the file browser selection changes.
+        """
+
+        selected = self.main.file_browser.currentItem()
+        if selected:
+            on_select = selected.data(0, Qt.UserRole + 1)
+            if on_select:
+                on_select()
 
     def open_bastion_folder(self, bastion_path=None):
         """
@@ -106,10 +112,10 @@ class BastionModApp(QApplication):
 
         if self.bastion_folder:
             for i in range(self.main.editor.count()):
-                w = self.main.editor.widget(i)
+                w = self.main.editor.widget(0)
                 if w and not w.close():
                     return False
-                self.main.editor.removeTab(i)
+                self.main.editor.removeTab(0)
         self.setup_file_browser()
         self.main.toggle_debug_mode.setEnabled(False)
         self.main.toggle_debug_mode.setChecked(False)

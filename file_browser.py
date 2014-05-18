@@ -5,8 +5,9 @@
 # of the Do What The Fuck You Want To Public License, Version 2, as published
 # by Sam Hocevar. See the COPYING file for more details.
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
 class FileBrowser(QStandardItemModel):
