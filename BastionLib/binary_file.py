@@ -79,6 +79,23 @@ class BaseBinaryRepresentation:
                 return
         self.__dict__[name] = value
 
+    def __str__(self):
+        """
+            Prints out the file's data in a readable form.
+        """
+
+        ret = '<' + self.__class__.__name__
+        for prop in self._properties:
+            if isinstance(self._values[prop.name], BaseBinaryRepresentation):
+                rep = str(self._values[prop.name]).split('\n')
+                for i, v in enumerate(rep[1:]):
+                    rep[i + 1] = '\t{}'.format(v)
+                ret += '\n\t{} = {}'.format(prop.name, '\n'.join(rep))
+            else:
+                ret += '\n\t{} = {}'.format(prop.name, self._values[prop.name])
+        ret += '\n>'
+        return ret
+
     def read(self, stream):
         """
             Reads the data from the stream into the representation.
@@ -216,7 +233,7 @@ class BinaryProperty:
         elif data_type == Types.BOOL:
             return False
         elif data_type == Types.VECTOR2:
-            return [0] * 2
+            return [0] * 8
         elif data_type == Types.COLOR:
             return [0] * 4
         elif data_type in Types.STRINGS:

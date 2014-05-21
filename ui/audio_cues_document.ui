@@ -36,6 +36,16 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QListWidget" name="cues_list">
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="1">
     <layout class="QVBoxLayout" name="cue_settings">
      <item>
@@ -121,16 +131,6 @@
       </layout>
      </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QListWidget" name="cues_list">
-     <property name="contextMenuPolicy">
-      <enum>Qt::ActionsContextMenu</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

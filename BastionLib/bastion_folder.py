@@ -47,11 +47,17 @@ class BastionFolder:
 
         self.path = path
         self.version = BastionFolder.VERSION_UNKNOWN
+        self.content_path = None
         self.exe = None
+
         self.audio = None
         self.streaming_dir = None
         self.sound_bank = None
         self.wave_banks = {}
+
+        self.maps = None
+        self.maps_files = {}
+        self.maps_properties = {}
 
         if not path:
             return
@@ -60,23 +66,30 @@ class BastionFolder:
         real_path = path
         if BastionFolder.EXE_NAME in os.listdir(path):
             self.version = BastionFolder.VERSION_WINDOWS
-            content_path = os.path.join(real_path, 'Content')
+            self.content_path = os.path.join(real_path, 'Content')
         elif (not BastionFolder.EXE_NAME in os.listdir(path)
             and 'Linux' in os.listdir(path)):
             self.version = BastionFolder.VERSION_LINUX
             real_path = os.path.join(path, 'Linux')
-            content_path = os.path.join(real_path, 'Content')
+            self.content_path = os.path.join(real_path, 'Content')
         else:
             raise ValueError('Invalid Bastion version.')
 
         self.exe = os.path.join(real_path, BastionFolder.EXE_NAME)
 
         # Audio
-        self.audio = os.path.join(content_path, 'Audio')
+        self.audio = os.path.join(self.content_path, 'Audio')
         self.streaming_dir = os.path.join(self.audio, 'Streaming')
         self.sound_bank = os.path.join(self.audio, SoundBank.NAME)
         self.wave_banks = {os.path.basename(f)[:-4] :
             f for f in glob(os.path.join(self.audio, '*.xwb'))}
+
+        # Maps
+        self.maps = os.path.join(self.content_path, 'Maps')
+        self.maps_files = {os.path.basename(f)[:-4] :
+            f for f in glob(os.path.join(self.maps, '*.map'))}
+        self.maps_properties = {os.path.basename(f)[:-4] :
+            f for f in glob(os.path.join(self.maps, '*.prop'))}
 
     def is_debug(self):
         """Checks if the exe is in debug mode."""

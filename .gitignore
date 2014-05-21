@@ -4,4 +4,4 @@ __pycache__/
 *.so
 
 build/
-tests/temp/*
+tests/*

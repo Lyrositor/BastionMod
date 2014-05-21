@@ -9,6 +9,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from ..bastion_module import BastionModule
+from BastionLib.bastion_folder import BastionFolder
+
 from .wave_banks import WaveBanksDocument
 from .sounds import SoundsDocument
 from .cues import CuesDocument
@@ -26,6 +28,10 @@ class Audio(BastionModule):
 
         super().__init__(bastion_folder, window)
         self.sound_bank = None
+
+        if self.bastion_folder.version != BastionFolder.VERSION_LINUX:
+            Logger.error('Audio module only available on Linux.')
+            return
 
         a = self.add_browser_entry('Audio')
         self.add_browser_entry('Wave Banks', None, a, self.open_wave_banks)

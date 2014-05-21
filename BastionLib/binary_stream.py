@@ -43,7 +43,7 @@ class BinaryStream(io.BytesIO):
         self.read_ulong = lambda: self.u('Q', 8)[0]
         self.read_float = lambda: self.u('f', 4)[0]
         self.read_double = lambda: self.u('d', 8)[0]
-        self.read_vector2 = lambda: self.u('BB', 2)[0]
+        self.read_vector2 = lambda: self.u('ff', 8)
 
         # Create the basic writing functions.
         self.p = lambda f, d: self.write(
@@ -59,7 +59,8 @@ class BinaryStream(io.BytesIO):
         self.write_ulong = lambda d: self.p('Q', d)
         self.write_float = lambda d: self.p('f', d)
         self.write_double = lambda d: self.p('d', d)
-        self.write_vector2 = lambda d: self.write(d)
+        self.write_vector2 = lambda d: self.write(
+            struct.pack('{}ff'.format(self._endian), *d))
 
     def read_7BitEncodedInt(self):
         """
@@ -80,9 +81,9 @@ class BinaryStream(io.BytesIO):
             Writes a 7BitEncodedInt.
         """
 
-        num = value  
+        num = value
         while num >= 0x80:
-            self.write_byte(num | 0x80)
+            self.write_byte((num | 0x80) & 0xff)
             num = (num >> 7) & 0xFFFFFFFF
         self.write_byte(num)
 
@@ -99,7 +100,7 @@ class BinaryStream(io.BytesIO):
             Writes a color from a list.
         """
 
-        self.write((color[2], color[1], color[0], color[3]))
+        self.write(bytes((color[2], color[1], color[0], color[3])))
 
     def read_cstring(self):
         """

@@ -55,7 +55,6 @@ class Document(QWidget):
             Called when a modification has been made.
         """
 
-
         tabs = self.parent().parent()
         idx = tabs.indexOf(self)
         if tabs.tabText(idx)[-1] != '*':
