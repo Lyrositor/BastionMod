@@ -14,6 +14,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
+from BastionLib.maps.map_file import MapFile
 from BastionLib.bastion_folder import BastionFolder
 from logger import Logger
 import modules
@@ -37,6 +38,7 @@ class BastionModApp(QApplication):
         # Status variables.
         self.bastion_folder = None
         self.current_path = None
+        self.modules = None
 
         # Load the main window.
         self.main = QMainWindow()
@@ -53,6 +55,7 @@ class BastionModApp(QApplication):
         self.main.save_document.triggered.connect(lambda: self.save_document())
         self.main.close_document.triggered.connect(lambda: self.close_document())
         self.main.toggle_debug_mode.triggered.connect(self.toggle_debug_mode)
+        self.main.create_map.triggered.connect(self.create_map)
         self.main.editor.currentChanged.connect(self.update_document_actions)
         self.main.editor.tabCloseRequested.connect(self.close_document)
 
@@ -101,8 +104,9 @@ class BastionModApp(QApplication):
             self.main.toggle_debug_mode.setEnabled(True)
             self.main.toggle_debug_mode.setChecked(
                 bool(self.bastion_folder.is_debug()))
+            self.main.create_map.setEnabled(True)
         self.setup_file_browser(self.bastion_folder)
-        modules.load_modules(self.bastion_folder, self.main)
+        self.modules = modules.load_modules(self.bastion_folder, self.main)
         Logger.info('Loaded data.')
 
     def close_bastion_folder(self):
@@ -119,6 +123,7 @@ class BastionModApp(QApplication):
         self.setup_file_browser()
         self.main.toggle_debug_mode.setEnabled(False)
         self.main.toggle_debug_mode.setChecked(False)
+        self.main.create_map.setEnabled(False)
         self.bastion_folder = None
         return True
 
@@ -134,6 +139,25 @@ class BastionModApp(QApplication):
         self.bastion_folder.save_exe()
         self.main.toggle_debug_mode.setChecked(
             bool(self.bastion_folder.is_debug()))
+
+    def create_map(self):
+        """
+            Creates an empty new map file.
+        """
+
+        map_name, status = QInputDialog.getText(
+            self.main, 'Create Map', 'Map Name (without the .map):')
+        if status and map_name:
+            path = os.path.join(self.bastion_folder.maps, map_name + '.map')
+            m = MapFile()
+            m.name = m.title_id = map_name
+            m.save(path)
+            for module in self.modules:
+                if module.__class__.__name__ == 'Maps':
+                    module.reload()
+                    break
+            QMessageBox.information(self.main, 'Success',
+                'Successfully created map.')
 
     def close_document(self, idx=None):
         """

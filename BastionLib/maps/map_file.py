@@ -146,7 +146,7 @@ class MapFile(BaseBinaryRepresentation):
         P('backdrop_flyer_parallax', Types.FLOAT),
 
         P('tile_assemble_sound', Types.STRING, param=1, default='MapAssemble'),
-        P('terrain_type', Types.STRING, param=1),
+        P('terrain_type', Types.STRING, param=1, default='FLOATIN'),
         P('unexplored_color', Types.COLOR),
 
         P('thing_groups', MapThingGroup, repeat=Types.INT),
@@ -171,3 +171,13 @@ class MapFile(BaseBinaryRepresentation):
         P('camera_location', Types.VECTOR2),
         P('camera_zoom', Types.FLOAT)
     )
+    
+    def __init__(self, name=None):
+        """
+            Creates an empty map file.
+        """
+        
+        super().__init__()
+        if name:
+            self.name = name
+            self.title_id = name

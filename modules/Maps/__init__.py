@@ -24,9 +24,19 @@ class Maps(BastionModule):
 
         super().__init__(bastion_folder, window)
 
-        a = self.add_browser_entry('Maps')
+        self.maps_entry = self.add_browser_entry('Maps')
+        self.reload()
+
+    def reload(self):
+        """
+            Reloads the file list.
+        """
+
+        for c in self.maps_entry.takeChildren():
+            del c
+        self.bastion_folder.load(self.bastion_folder.path)
         for map_name in sorted(self.bastion_folder.maps_files):
-            self.add_browser_entry(map_name, None, a, self.open_map)
+            self.add_browser_entry(map_name, None, self.maps_entry, self.open_map)
 
     def get_map_document(self, name):
         """

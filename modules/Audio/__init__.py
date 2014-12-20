@@ -10,6 +10,7 @@ from PyQt5.QtGui import *
 
 from ..bastion_module import BastionModule
 from BastionLib.bastion_folder import BastionFolder
+from logger import Logger
 
 from .wave_banks import WaveBanksDocument
 from .sounds import SoundsDocument

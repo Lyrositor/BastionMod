@@ -88,8 +88,17 @@ class MapThingGroup(BaseBinaryRepresentation):
 
     _properties = (
         P('version', Types.INT, default=VERSION, equals=VERSION),
-        P('name', Types.STRING, param=1),
+        P('name', Types.STRING, param=1, default='Default'),
         P('things', MapThing, repeat=Types.INT),
         P('visible', Types.BOOL, default=True),
         P('selectable', Types.BOOL, default=True)
     )
+    
+    def __init__(self, name=None):
+        """
+            Creates a new empty group.
+        """
+        
+        super().__init__()
+        if name:
+            self.name = name

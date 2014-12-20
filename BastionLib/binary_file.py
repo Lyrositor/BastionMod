@@ -86,16 +86,27 @@ class BaseBinaryRepresentation:
 
         ret = '<' + self.__class__.__name__
         for prop in self._properties:
-            if isinstance(self._values[prop.name], BaseBinaryRepresentation):
-                rep = str(self._values[prop.name]).split('\n')
+            val = self._values[prop.name]
+            if isinstance(val, BaseBinaryRepresentation):
+                rep = str(val).split('\n')
                 for i, v in enumerate(rep[1:]):
                     rep[i + 1] = '\t{}'.format(v)
                 ret += '\n\t{} = {}'.format(prop.name, '\n'.join(rep))
+            elif val and isinstance(val, list) and isinstance(val[0], BaseBinaryRepresentation):
+                reps = []
+                for val2 in val:
+                    rep = str(val2).split('\n')
+                    for i, v in enumerate(rep[1:]):
+                        rep[i + 1] = '\t{}'.format(v)
+                    reps.append('\n'.join(rep))
+                ret += '\n\t{} = [\n\t{}]'.format(prop.name, ',\n\t'.join(reps))
+            elif val and isinstance(val, list) and isinstance(val[0], str) and val[0].endswith('\n'):
+                ret += '\n\t{} = {}'.format(prop.name, ''.join([l.replace('\n', '') for l in val]))
             else:
-                ret += '\n\t{} = {}'.format(prop.name, self._values[prop.name])
+                ret += '\n\t{} = {}'.format(prop.name, val)
         ret += '\n>'
-        return ret
-
+        return ret    
+        
     def read(self, stream):
         """
             Reads the data from the stream into the representation.
@@ -233,7 +244,7 @@ class BinaryProperty:
         elif data_type == Types.BOOL:
             return False
         elif data_type == Types.VECTOR2:
-            return [0] * 8
+            return [0] * 2
         elif data_type == Types.COLOR:
             return [0] * 4
         elif data_type in Types.STRINGS:
